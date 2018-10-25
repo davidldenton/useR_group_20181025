@@ -62,12 +62,11 @@ cars_avg <- summarise(cars, mean_power_to_weight = mean(power_to_weight))
 
 cars2 = mtcars %>%
     rownames_to_column(var = 'car') %>%
-    filter(disp > 300) %>%
-    group_by(cyl) %>%
+    filter(cyl == 8, disp > 300) %>%
     mutate(power_to_weight = hp/wt) %>%
     arrange(desc(power_to_weight)) %>%
     select(car, power_to_weight) %>%
-    summarise(avg_power_to_weight = mean(power_to_weight))
+    summarise(mean_power_to_weight = mean(power_to_weight))
 
 # Principles of tidy data:
 #   1. Each variable must have its own column.
@@ -77,8 +76,7 @@ cars2 = mtcars %>%
 
 messy_data <- read_csv('messy_data.csv')
 
-tidy_data <- read_csv('tidy_data.csv') %>%
-    mutate(readmit_rate = HF_readmissions/HF_admissions)
+tidy_data <- read_csv('tidy_data.csv')
 
 messy_to_tidy <- spread(messy_data, key = var_type, value = value)
 
